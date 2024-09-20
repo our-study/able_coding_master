@@ -1,0 +1,16 @@
+import sys 
+def my_def(N, sharks):
+    dp = [1] * N
+
+    for i in range(1, N):
+        for j in range(i):
+            if sharks[j] < sharks[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return max(dp)
+
+N = int(input())
+sharks = list(map(int, input().split()))
+
+result = my_def(N, sharks)
+print(result)

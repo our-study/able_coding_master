@@ -1,0 +1,43 @@
+import sys 
+def dfs(row, N, board, white):
+    if row == N:
+        return min(white, count_stones(N, board))
+    
+    result_01 = dfs(row + 1, N, board, white)
+    
+    test(board, row)
+    result_01 = min(result_01, dfs(row + 1, N, board, white))
+    test(board, row)
+    
+    return result_01
+    
+    
+def test(board, row): # 테스트
+    for i in range(len(board[row])):
+        board[row][i] = 'A' if board[row][i] == 'B' else 'B'
+
+
+def count_stones(N, board):
+    total = 0
+    
+    for j in range(N):
+        white_in_column = 0
+        for i in range(N):
+            if board[i][j] == 'B':
+                white_in_column += 1
+        total += min(white_in_column, N - white_in_column)
+    
+    return total
+    
+    
+    
+    
+N = int(input())
+board = []
+for _ in range(N):
+    row = list(input().strip())
+    board.append(row)
+
+result = dfs(0, N, board, float('inf'))
+
+print(result)
