@@ -1,0 +1,22 @@
+import sys 
+
+def my_def(N, M, coins):
+    dp = [float('inf')] * (M + 1)
+    dp[0] = 0
+    
+    for coin in coins:
+        for i in range(coin, M + 1):
+            if dp[i - coin] != float('inf'):
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+    return dp[M] if dp[M] != float('inf') else -1
+
+N, M = map(int, input().split())
+coins = [int(input()) for _ in range(N)]
+
+result = my_def(N, M, coins)
+print(result)
+
+# 처음에는 잠깐 큰수부터 나눌려고 했으나 그러면 일부 케이스에서 에러가 납니다.
+예를들어 6원을 4, 3, 1로 조합할때 큰수부터 나누면 4, 1*2지만 3*2가 최소입니다.
+따라서 바로 DP로 풀었습니다.

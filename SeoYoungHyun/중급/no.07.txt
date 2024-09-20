@@ -1,0 +1,26 @@
+import sys 
+def my_def(X, Y):
+    current_rate = (Y * 100) // X
+    
+    up, down = 0, 1000000000
+    result = -1
+    
+    while up <= down:
+        mid = (up + down) // 2
+        
+        new_rate = ((Y + mid) * 100) // (X + mid)
+        
+        if new_rate > current_rate:
+            result = mid
+            down = mid - 1
+        else:
+            up = mid + 1
+    
+    return result
+
+X, Y = map(int, input().split())
+
+print(my_def(X, Y))
+
+
+# 이분 탐색으로 풀었습니다.

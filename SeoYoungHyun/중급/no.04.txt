@@ -1,0 +1,38 @@
+import sys 
+import heapq
+
+def min_full(N, full, L, P):
+    full.sort()
+    current = P
+    num_full = 0
+    
+    max_heap = []
+    idx = 0
+    
+    while current < L:
+        while idx < N and full[idx][0] <= current:
+            heapq.heappush(max_heap, -full[idx][1])
+            idx += 1
+        
+        if not max_heap:
+            return -1
+        
+        current += -heapq.heappop(max_heap)
+        num_full += 1
+    
+    return num_full
+
+N = int(input())
+full = []
+
+for _ in range(N):
+    a, b = map(int, input().split())
+    full.append((a, b))
+
+L, P = map(int, input().split())
+
+result = min_full(N, full, L, P)
+print(result)
+
+
+#그리디 알고리즘을 사용하였습니다.

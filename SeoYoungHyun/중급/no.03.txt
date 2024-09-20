@@ -1,0 +1,18 @@
+import sys 
+
+def my_def(N, M, coins):
+    dp = [float('inf')] * (M + 1)
+    dp[0] = 0
+    
+    for coin in coins:
+        for i in range(coin, M + 1):
+            if dp[i - coin] != float('inf'):
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+    return dp[M] if dp[M] != float('inf') else -1
+
+N, M = map(int, input().split())
+coins = [int(input()) for _ in range(N)]
+
+result = my_def(N, M, coins)
+print(result)
