@@ -1,6 +1,9 @@
 # able_coding_master
 
 [![Since](https://img.shields.io/badge/since-2024.09.18-333333.svg)]([https://github.com/aivle33-dev-study/cs-study](https://github.com/our-study/able_coding_master))
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]([https://opensource.org/licenses/MIT](https://github.com/our-study/able_coding_master/blob/main/LICENSE))
+
+
 
 자기주도적 학습을 중요시하는 KT AIVLER들을 위한 스터디 공간입니다.
 
