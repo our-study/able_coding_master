@@ -1,0 +1,19 @@
+-우리반 아이큐왕은-
+
+"def top_students(): 
+    students = [] 
+     
+    n = int(input()) 
+     
+    for _ in range(n): 
+        name, iq = input().split() 
+        students.append((name, int(iq))) 
+     
+    students.sort(key=lambda x: x[1], reverse=True) 
+     
+    top_3 = students[:3] 
+    for student in top_3: 
+        print(student[0]) 
+ 
+top_students() 
+"
