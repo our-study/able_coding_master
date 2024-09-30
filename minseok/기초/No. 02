@@ -1,0 +1,4 @@
+"hight = list(map(int, input().split()))
+sum_h = sum(hight)
+mean_h = sum_h // 2
+print(mean_h)"
