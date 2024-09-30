@@ -1,0 +1,14 @@
+-림보게임-
+
+"n = int(input())
+hight = list(map(int, input().split()))
+he = 160
+
+for i in range(0, n):
+    if he >= hight[i]:
+        print('I', hight[i])
+        break
+    
+else:
+    print('P')
+"
