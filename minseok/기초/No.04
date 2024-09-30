@@ -1,0 +1,19 @@
+-기억상실-
+
+"def days_to_memorize(A, B, N): 
+    days = 0 
+    memorized = 0 
+     
+    while memorized < N: 
+        days += 1 
+        memorized += A 
+        if memorized >= N: 
+            break 
+        memorized -= B 
+         
+    return days 
+ 
+A, B, N = map(int, input().split()) 
+result = days_to_memorize(A, B, N) 
+print(result) 
+"
