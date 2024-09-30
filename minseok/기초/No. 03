@@ -1,0 +1,9 @@
+-삼각형의 조건-
+
+"tr = list(map(int, input().split()))
+sum_tr = sum(tr)
+
+if sum_tr < 180:
+    print('F')
+else:
+    print('P')"
