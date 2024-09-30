@@ -1,0 +1,9 @@
+-최대공약수-
+
+def gcd(n, m):
+    while m:
+        n, m = m, n % m
+    return n
+
+n, m = map(int, input().split())
+print(gcd(n, m))
