@@ -1,3 +1,5 @@
+-자녀의 키-
+
 "hight = list(map(int, input().split()))
 sum_h = sum(hight)
 mean_h = sum_h // 2
