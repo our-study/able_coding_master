@@ -1,0 +1,18 @@
+-아까운 쿠폰-
+
+"def min_cp(cg):
+    dms = [50000, 10000, 5000, 1000, 500, 100, 50, 10]
+    cp_count = 0
+    
+    for dm in dms:
+        if cg == 0:
+            break
+        count = cg // dm
+        cp_count += count
+        cg -= count * dm
+        
+    return cp_count
+    
+am = int(input())
+result = min_cp(am)
+print(result)"
