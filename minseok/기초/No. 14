@@ -1,0 +1,10 @@
+-가장 큰 나머지-
+
+n = int(input())
+s = n % 5
+c = n % 7
+
+if s > c:
+    print(s)
+else:
+    print(c)
