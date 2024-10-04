@@ -1,0 +1,38 @@
+from itertools import permutations
+
+def time_to_seconds(time):
+    hh, mm, ss = map(int, time.split(':'))
+    return hh * 3600 + mm * 60 + ss
+
+def fun_c(N, relationships):
+    relations = {}
+    for a, b, c in relationships:
+        if a == 1:
+            relations[(b, c)] = 1
+            relations[(c, b)] = 1
+        elif a == 2:
+            relations[(b, c)] = -1
+            relations[(c, b)] = -1
+
+    students = list(range(1, 2 * N + 1))
+    max_score = float('-inf')
+
+    for perm in permutations(students):
+        score = 0
+        for i in range(N):
+            student1, student2 = perm[2 * i], perm[2 * i + 1]
+            score += relations.get((student1, student2), 0)
+        max_score = max(max_score, score)
+
+    return max_score
+
+N = int(input())
+K = int(input())
+
+relationships = []
+for _ in range(K):
+    a, b, c = map(int, input().split())
+    relationships.append((a, b, c))
+
+max_score = fun_c(N, relationships)
+print(max_score)

@@ -1,0 +1,35 @@
+from collections import deque
+
+def sliding_puzzle(start):
+    goal = "123X"
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    
+    start = "".join(start[0]) + "".join(start[1])
+    queue = deque([(start, start.index('X'), 0)])
+    visited = set([start])
+    
+    while queue:
+        current, x_index, step = queue.popleft()
+        
+        if current == goal:
+            return step
+        
+        x_row, x_col = divmod(x_index, 2)
+        
+        for dx, dy in directions:
+            new_row, new_col = x_row + dx, x_col + dy
+            if 0 <= new_row < 2 and 0 <= new_col < 2:
+                new_index = new_row * 2 + new_col
+                
+                new_state = list(current)
+                new_state[x_index], new_state[new_index] = new_state[new_index], new_state[x_index]
+                new_state = "".join(new_state)
+                
+                if new_state not in visited:
+                    visited.add(new_state)
+                    queue.append((new_state, new_index, step + 1))
+    
+    return -1
+
+start = [list(input().strip()) for _ in range(2)]
+print(sliding_puzzle(start))

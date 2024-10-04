@@ -1,0 +1,29 @@
+import sys
+
+def generate_star_pattern(n):
+    if n == 1:
+        return ["*"]
+    
+    prev_pattern = generate_star_pattern(n - 1)
+    size = len(prev_pattern)
+    
+    new_pattern = []
+    
+    for line in prev_pattern:
+        new_pattern.append(line + " " * size + line)
+    
+    for line in prev_pattern:
+        new_pattern.append(" " * (size) + line + " " * (size))
+    
+    for line in prev_pattern:
+        new_pattern.append(line + " " * size + line)
+    
+    return new_pattern
+
+def print_star_pattern(n):
+    pattern = generate_star_pattern(n)
+    for line in pattern:
+        print(line)
+
+n = int(sys.stdin.readline().strip())
+print_star_pattern(n)

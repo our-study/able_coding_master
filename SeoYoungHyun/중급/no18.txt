@@ -1,0 +1,39 @@
+def print_grid(grid):
+    for row in grid:
+        print(''.join(map(str, row)))
+
+def count_neighbors(grid, r, c):
+    neighbors = [
+        (-1, -1), (-1, 0), (-1, 1),
+        (0, -1),         (0, 1),
+        (1, -1), (1, 0), (1, 1)
+    ]
+    count = 0
+    for dr, dc in neighbors:
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+            count += grid[nr][nc]
+    return count
+
+def next_generation(grid):
+    new_grid = [[0]*5 for _ in range(5)]
+    for r in range(5):
+        for c in range(5):
+            live_neighbors = count_neighbors(grid, r, c)
+            if grid[r][c] == 1:
+                new_grid[r][c] = 1 if live_neighbors in (2, 3) else 0
+            else:
+                new_grid[r][c] = 1 if live_neighbors == 3 else 0
+    return new_grid
+
+N = int(input())
+initial_state = []
+for _ in range(5):
+    row = list(map(int, list(input().strip())))
+    initial_state.append(row)
+
+current_grid = initial_state
+for _ in range(N):
+    current_grid = next_generation(current_grid)
+
+print_grid(current_grid)

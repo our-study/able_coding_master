@@ -1,0 +1,44 @@
+def rational_to_decimal(p, q):
+    integer_part = p // q
+    remainder = p % q
+    
+    remainder_list = []
+    decimal_part = ""
+    remainder_map = {}
+    
+    temp_q = q
+    while temp_q % 2 == 0:
+        temp_q //= 2
+    while temp_q % 5 == 0:
+        temp_q //= 5
+
+    if temp_q == 1:
+        fractional_part = p / q
+        result = str(fractional_part).rstrip('0').rstrip('.')
+        return result
+    
+    result = str(integer_part) + "."
+
+    idx = 0
+    while remainder != 0:
+        if remainder in remainder_map:
+            repeat_start = remainder_map[remainder]
+            non_repeating = decimal_part[:repeat_start]
+            repeating = decimal_part[repeat_start:]
+            result += non_repeating + "{" + repeating + "}"
+            return result
+        
+        remainder_map[remainder] = idx
+        
+        remainder *= 10
+        digit = remainder // q
+        decimal_part += str(digit)
+        remainder %= q
+        
+        idx += 1
+
+    result += decimal_part
+    return result
+
+p, q = map(int, input().strip().split())
+print(rational_to_decimal(p, q))
