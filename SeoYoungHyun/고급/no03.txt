@@ -1,0 +1,36 @@
+from itertools import combinations
+
+def calculate_score_difference(S, group1, group2):
+    score1 = 0
+    for i in group1:
+        for j in group1:
+            if i != j:
+                score1 += S[i][j]
+                
+    score2 = 0
+    for i in group2:
+        for j in group2:
+            if i != j:
+                score2 += S[i][j]
+                
+    return abs(score1 - score2)
+
+def find_minimum_difference(N, S):
+    ingredients = list(range(N))
+    min_difference = float('inf')
+    
+    for group1 in combinations(ingredients, N // 2):
+        group2 = [ingredient for ingredient in ingredients if ingredient not in group1]
+        
+        difference = calculate_score_difference(S, group1, group2)
+        
+        if difference < min_difference:
+            min_difference = difference
+            
+    return min_difference
+
+N = int(input())
+S = [list(map(int, input().split())) for _ in range(N)]
+
+result = find_minimum_difference(N, S)
+print(result)

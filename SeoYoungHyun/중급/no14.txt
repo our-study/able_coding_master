@@ -1,0 +1,55 @@
+from collections import deque
+
+def bfs(board, visited, start, n, m):
+    queue = deque([start])
+    visited[start[0]][start[1]] = True
+    cells = []
+    red_count = 0
+    blue_count = 0
+    
+    while queue:
+        x, y = queue.popleft()
+        cells.append((x, y))
+        
+        if board[x][y] == 'A':
+            red_count += 1
+        elif board[x][y] == 'B':
+            blue_count += 1
+
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < n and 0 <= ny < m and not visited[nx][ny] and board[nx][ny] != 'X':
+                visited[nx][ny] = True
+                queue.append((nx, ny))
+    
+    return cells, red_count, blue_count
+
+n, m = map(int, input().split())
+board = [list(input().strip()) for _ in range(n)]
+
+visited = [[False] * m for _ in range(n)]
+red_total = 0
+blue_total = 0
+
+for i in range(n):
+    for j in range(m):
+        if board[i][j] != 'X' and not visited[i][j]:
+            cells, red_count, blue_count = bfs(board, visited, (i, j), n, m)
+            
+            if blue_count >= red_count:
+                for x, y in cells:
+                    if board[x][y] == 'A':
+                        board[x][y] = 'O'
+            else:
+                for x, y in cells:
+                    if board[x][y] == 'B':
+                        board[x][y] = 'O'
+
+for i in range(n):
+    for j in range(m):
+        if board[i][j] == 'A':
+            red_total += 1
+        elif board[i][j] == 'B':
+            blue_total += 1
+
+print(red_total, blue_total)

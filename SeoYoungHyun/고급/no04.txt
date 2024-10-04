@@ -1,0 +1,27 @@
+def can_distribute(mid, requests, M):
+    total = 0
+    for req in requests:
+        total += min(req, mid)
+    return total <= M
+
+def fff(N, requests, M):
+    left, right = 1, max(requests)
+    answer = 0
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if can_distribute(mid, requests, M):
+            answer = mid
+            left = mid + 1
+        else:
+            right = mid - 1
+            
+    return answer
+
+N = int(input())
+requests = list(map(int, input().split()))
+M = int(input())
+
+result = fff(N, requests, M)
+print(result)

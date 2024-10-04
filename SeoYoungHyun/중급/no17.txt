@@ -1,0 +1,29 @@
+from itertools import permutations
+
+def read_graph(M):
+    edges = []
+    for _ in range(M):
+        u, v = map(int, input().split())
+        edges.append(tuple(sorted((u, v))))
+    return set(edges)
+
+def are_isomorphic(N1, M1, edges1, N2, M2, edges2):
+    if N1 != N2 or M1 != M2:
+        return False
+    if edges1 == edges2:
+        return True
+    for perm in permutations(range(1, N1 + 1)):
+        remapped_edges = {tuple(sorted((perm[u - 1], perm[v - 1]))) for u, v in edges1}
+        if remapped_edges == edges2:
+            return True
+    return False
+
+N1, M1 = map(int, input().split())
+edges1 = read_graph(M1)
+N2, M2 = map(int, input().split())
+edges2 = read_graph(M2)
+
+if are_isomorphic(N1, M1, edges1, N2, M2, edges2):
+    print("YES")
+else:
+    print("NO")

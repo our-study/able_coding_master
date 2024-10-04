@@ -1,0 +1,34 @@
+def time_to_seconds(time):
+    hh, mm, ss = map(int, time.split(':'))
+    return hh * 3600 + mm * 60 + ss
+
+N, M = map(int, input().split())
+events = []
+customer_entered = {}
+
+for i in range(M):
+    start_time, end_time = input().split()
+    start_seconds = time_to_seconds(start_time)
+    end_seconds = time_to_seconds(end_time)
+    
+    events.append((start_seconds, 'enter', i))
+    events.append((end_seconds, 'exit', i))
+
+events.sort(key=lambda x: (x[0], x[1] == 'exit'))
+
+current_customers = 0
+total_customers = 0
+
+for event in events:
+    time, action, customer_id = event
+    
+    if action == 'enter':
+        if current_customers < N:
+            current_customers += 1
+            total_customers += 1
+            customer_entered[customer_id] = True
+    elif action == 'exit':
+        if customer_entered.get(customer_id, False):
+            current_customers -= 1
+
+print(total_customers)

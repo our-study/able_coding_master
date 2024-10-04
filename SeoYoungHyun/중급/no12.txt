@@ -1,0 +1,26 @@
+from collections import deque
+import sys
+
+n, m = map(int, sys.stdin.readline().strip().split())
+targets = list(map(int, sys.stdin.readline().strip().split()))
+
+candies = deque(range(1, n + 1))
+
+total_rotation = 0
+
+for target in targets:
+    pos = candies.index(target)
+    
+    left_rotation = pos
+    right_rotation = len(candies) - pos
+    
+    total_rotation += min(left_rotation, right_rotation)
+    
+    if left_rotation <= right_rotation:
+        candies.rotate(-left_rotation)
+    else:
+        candies.rotate(right_rotation)
+    
+    candies.popleft()
+
+print(total_rotation)

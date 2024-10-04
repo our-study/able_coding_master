@@ -1,0 +1,32 @@
+def count_paths(N, x1, y1, x2, y2):
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    memo = {}
+
+    def dfs(x, y, steps_left, visited):
+        if steps_left == 0:
+            return 1 if (x, y) == (x2, y2) else 0
+        
+        memo_key = (x, y, steps_left, tuple(sorted(visited)))
+        if memo_key in memo:
+            return memo[memo_key]
+
+        count = 0
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if (nx, ny) not in visited:
+                visited.add((nx, ny))
+                count += dfs(nx, ny, steps_left - 1, visited)
+                visited.remove((nx, ny))
+        
+        memo[memo_key] = count
+        return count
+
+    visited = set()
+    visited.add((x1, y1))
+    return dfs(x1, y1, N, visited)
+
+N = int(input().strip())
+x1, y1 = map(int, input().strip().split())
+x2, y2 = map(int, input().strip().split())
+
+print(count_paths(N, x1, y1, x2, y2))
