@@ -1,0 +1,5 @@
+- 아스키 코드-
+
+n = int(input())
+
+print(chr(n))
