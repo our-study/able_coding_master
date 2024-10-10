@@ -1,0 +1,6 @@
+- 구름 별 -
+
+n = int(input())
+
+for i in range(n):
+    print(' '* i + '**')
