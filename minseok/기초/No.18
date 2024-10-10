@@ -1,0 +1,7 @@
+- 등차수열 -
+
+a, b, c = map(int, input().split())
+
+n = a + (c - 1) * b
+
+print(n)
