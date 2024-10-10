@@ -1,0 +1,11 @@
+- 이별 30분 전 -
+
+h, m = map(int, input().split())
+
+if m < 30:
+    h -= 1
+    m += 30
+else:
+    m -= 30
+    
+print(h, m)
