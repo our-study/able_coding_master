@@ -1,0 +1,7 @@
+a = input()
+if not a.isalpha():
+    print('I')
+elif len(a) > 20:
+    print('I')
+else:
+    print('P')
