@@ -1,0 +1,13 @@
+- 비밀번호 찾기 -
+
+n = list(input().split())
+m = ''
+for i in range(0, len(n)):
+    if n[i] == 'c':
+        m += n[i]
+        break
+    else:
+        m += n[i]
+        m += ' '
+
+print(m)
