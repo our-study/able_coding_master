@@ -1,0 +1,18 @@
+def check_cheating(answer):
+    n = len(answer)
+    half_length = n // 2
+
+    for start in range(half_length):
+        candidate = answer[start:start + half_length]
+
+        remaining = answer[:start] + answer[start + half_length:]
+
+        if candidate == remaining:
+            print("YES")
+            print(candidate)
+            return
+
+    print("NO")
+
+answer = input()
+check_cheating(answer)

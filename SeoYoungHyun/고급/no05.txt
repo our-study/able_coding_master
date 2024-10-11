@@ -1,0 +1,28 @@
+def min_winning_works(works):
+    n = len(works)
+    works.sort()
+    dropped = [False] * n
+
+    for i in range(n):
+        if dropped[i]:
+            continue
+
+        defeated = []
+
+        for j in range(n):
+            if i != j and not dropped[j]:
+                if (works[i][0] >= works[j][0] and
+                    works[i][1] >= works[j][1] and
+                    works[i][2] >= works[j][2]):
+                    defeated.append(j)
+
+        for idx in defeated[:2]:
+            dropped[idx] = True
+
+    winning_count = sum(1 for d in dropped if not d)
+    return winning_count
+
+n = int(input())
+works = [tuple(map(int, input().split())) for _ in range(n)]
+
+print(min_winning_works(works))

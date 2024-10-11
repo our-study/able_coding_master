@@ -1,0 +1,81 @@
+boomerangs = [
+    [(0, 0), (0, 1), (1, 0)],  # ㄱ 모양 (왼쪽 위)
+    [(0, 0), (0, -1), (1, 0)],  # ㄴ 모양 (왼쪽 아래)
+    [(0, 0), (-1, 0), (0, 1)],  # ┌ 모양 (오른쪽 위)
+    [(0, 0), (-1, 0), (0, -1)]  # ┐ 모양 (오른쪽 아래)
+]
+
+def calculate_boomerang_strength(wood, positions):
+    strength = 0
+    for i, (x, y) in enumerate(positions):
+        if i == 0:
+            strength += wood[x][y] * 2  # 중심 위치는 강도 2배
+        else:
+            strength += wood[x][y]
+    return strength
+
+def set_visited(visited, positions, value):
+    for x, y in positions:
+        visited[x][y] = value
+
+def find_all_boomerang_combinations(N, M, wood):
+    all_combinations = []
+
+    # 모든 위치에 대해 가능한 부메랑 배치 탐색
+    for i in range(N):
+        for j in range(M):
+            for boomerang in boomerangs:
+                positions = []
+                can_place = True
+                for dx, dy in boomerang:
+                    ni, nj = i + dx, j + dy
+                    # 범위 내에 있으며 방문되지 않은 위치만 추가
+                    if 0 <= ni < N and 0 <= nj < M:
+                        positions.append((ni, nj))
+                    else:
+                        can_place = False
+                        break
+
+                if can_place:
+                    # 배치 가능한 부메랑 조합과 강도 합을 저장
+                    all_combinations.append((positions, calculate_boomerang_strength(wood, positions)))
+
+    return all_combinations
+
+def max_boomerang_strength(N, M, wood):
+    all_combinations = find_all_boomerang_combinations(N, M, wood)  # 모든 부메랑 배치 조합 찾기
+    max_strength = 0
+    visited = [[False] * M for _ in range(N)]  # 방문 상태 초기화
+
+    # 모든 부메랑 배치 조합에 대해 탐색
+    def backtrack(index, current_strength):
+        nonlocal max_strength
+        if index >= len(all_combinations):
+            max_strength = max(max_strength, current_strength)
+            return
+
+        positions, strength = all_combinations[index]
+
+        # 현재 부메랑을 사용할 수 있는지 확인
+        if all(not visited[x][y] for x, y in positions):
+            # 부메랑 배치
+            set_visited(visited, positions, True)
+            # 다음 부메랑 배치 고려 (중복 배치 방지)
+            backtrack(index + 1, current_strength + strength)
+            # 부메랑 배치 해제
+            set_visited(visited, positions, False)
+
+        # 현재 부메랑을 사용하지 않고 다음 부메랑 고려
+        backtrack(index + 1, current_strength)
+
+    backtrack(0, 0)
+    return max_strength
+
+N, M = map(int, input().split())  # 행과 열 입력
+wood = []
+for _ in range(N):
+    row = list(map(int, input().split()))  # 각 행의 값 입력
+    wood.append(row)
+
+result = max_boomerang_strength(N, M, wood)
+print(result)

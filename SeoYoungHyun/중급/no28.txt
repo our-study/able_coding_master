@@ -1,0 +1,30 @@
+import math
+
+def find_best_entry_point(N, x_person, y_person):
+    best_x = None
+    min_time = float('inf')
+
+    for x_target in range(-100, 101):
+        distance_to_water = math.sqrt((x_target - 0) ** 2 + (0 - N) ** 2)
+        t_run = distance_to_water / 10.0
+
+        distance_to_person = math.sqrt((x_person - x_target) ** 2 + (y_person - 0) ** 2)
+        
+        t_swim = distance_to_person / 5.0
+        
+        total_time = t_run + t_swim
+        
+        if total_time < min_time:
+            min_time = total_time
+            best_x = x_target
+        elif total_time == min_time and (best_x is None or x_target < best_x): 
+            best_x = x_target
+
+    return best_x
+
+N = int(input())
+x_person, y_person = map(int, input().strip().split())
+
+result = find_best_entry_point(N, x_person, y_person)
+
+print(result)

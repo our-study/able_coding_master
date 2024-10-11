@@ -1,0 +1,56 @@
+from collections import Counter
+
+def copy_substring(list_A, a, b):
+    copied_part = list_A[a:b]
+    result = ""
+    for i, char in enumerate(list_A):
+        result += char
+        if i >= a and i < b:
+            result += copied_part[i - a]
+    return result
+
+def all_characters_in_result(result, test_slice):
+    result_count = Counter(result)
+    test_slice_count = Counter(test_slice)
+    for char, count in test_slice_count.items():
+        if result_count[char] < count:
+            return False
+    return True
+
+def slice_string(result, list_A, a):
+    for i in range(len(list_A) - a + 1):
+        test_slice = copy_substring(list_A, i, i + a)
+        if all_characters_in_result(result, test_slice):
+            return test_slice
+    return -1
+
+def min_copy_operations(sol, result):
+    count = 0
+    memo = set()  # 중복 상태를 저장하여 연산 방지
+    while sol != result:
+        len_r = len(result)
+        len_s = len(sol)
+
+        len_want = min(len_s, len_r - len_s)  # 작은 쪽 길이 선택
+
+        found = False
+        for i in range(len_want, 0, -1):  # 복사할 길이 줄여가며 확인
+            test_slice = slice_string(result, sol, i)
+            if test_slice != -1 and test_slice not in memo:
+                memo.add(test_slice)
+                sol = test_slice
+                count += 1
+                found = True
+                break
+
+        if not found:  # 더 이상 진행할 수 없을 때 중지
+            count += 1
+            break
+
+    return count
+
+S1 = input()
+S2 = input()
+
+result_1 = min_copy_operations(S1, S2)
+print(result_1)

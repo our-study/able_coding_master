@@ -1,0 +1,45 @@
+from collections import defaultdict, deque
+
+def can_traverse_with_speed(graph, start, end, speed, n):
+    visited = [False] * (n + 1)
+    queue = deque([start])
+    visited[start] = True
+    
+    while queue:
+        node = queue.popleft()
+        
+        if node == end:
+            return True
+        
+        for neighbor, limit in graph[node]:
+            if not visited[neighbor] and limit >= speed:
+                visited[neighbor] = True
+                queue.append(neighbor)
+    
+    return False
+
+def find_max_safe_speed(n, connections, start, end):
+    graph = defaultdict(list)
+    
+    for a, b, c in connections:
+        graph[a].append((b, c))
+        graph[b].append((a, c))
+    
+    low, high = 1, 100
+    
+    while low <= high:
+        mid = (low + high) // 2
+        
+        if can_traverse_with_speed(graph, start, end, mid, n):
+            low = mid + 1
+        else:
+            high = mid - 1
+    
+    return high
+
+n, m = map(int, input().split())
+connections = [tuple(map(int, input().split())) for _ in range(m)]
+start, end = map(int, input().split())
+
+max_safe_speed = find_max_safe_speed(n, connections, start, end)
+print(max_safe_speed)

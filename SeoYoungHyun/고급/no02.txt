@@ -3,6 +3,25 @@ from collections import deque
 
 directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
+
+def my_def(a_list, N, M):
+    empty_spaces = [(i, j) for i in range(N) for j in range(M) if a_list[i][j] == 0]
+    max_safe = 0
+    
+    for walls in itertools.combinations(empty_spaces, 3):
+        new_zoo = [row[:] for row in a_list]
+        for x, y in walls:
+            new_zoo[x][y] = 1
+        bfs(new_zoo, N, M)
+        safe_count = test(new_zoo, N, M)
+        max_safe = max(max_safe, safe_count)
+    
+    return max_safe
+    
+    
+    
+    
+    
 def bfs(zoo, N, M):
     queue = deque()
     for i in range(N):
@@ -19,6 +38,7 @@ def bfs(zoo, N, M):
                 zoo[nx][ny] = 2
                 queue.append((nx, ny))
 
+
 def test(zoo, N, M):
     safe_count = 0
     for i in range(N):
@@ -26,20 +46,6 @@ def test(zoo, N, M):
             if zoo[i][j] == 0:
                 safe_count += 1
     return safe_count
-
-def my_def(a_list, N, M):
-    empty_spaces = [(i, j) for i in range(N) for j in range(M) if a_list[i][j] == 0]
-    max_safe = 0
-    
-    for walls in itertools.combinations(empty_spaces, 3):
-        new_zoo = [row[:] for row in a_list]
-        for x, y in walls:
-            new_zoo[x][y] = 1
-        bfs(new_zoo, N, M)
-        safe_count = test(new_zoo, N, M)
-        max_safe = max(max_safe, safe_count)
-    
-    return max_safe
 
 N, M = map(int, input().split())
 

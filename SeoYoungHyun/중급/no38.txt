@@ -1,0 +1,59 @@
+def is_winning_move(board, row, col):
+    directions = [
+        (0, 1),  
+        (1, 0),  
+        (1, 1),  
+        (1, -1)  
+    ]
+
+    for dr, dc in directions:
+        count = 1
+
+        for i in range(1, 5):
+            nr, nc = row + dr * i, col + dc * i
+            if 0 <= nr < 10 and 0 <= nc < 10 and board[nr][nc] == 'W':
+                count += 1
+            else:
+                break
+
+        for i in range(1, 5):
+            nr, nc = row - dr * i, col - dc * i
+            if 0 <= nr < 10 and 0 <= nc < 10 and board[nr][nc] == 'W':
+                count += 1
+            else:
+                break
+
+        if count >= 5:
+            return True
+
+    return False
+
+
+def count_victory_moves(board):
+    total_victory_moves = 0
+
+    for direction in ['row', 'col']:
+        for index in range(10):
+            new_board = [list(row) for row in board]
+
+            if direction == 'row':
+                for col in range(10):
+                    new_board[index][col] = '.'
+            elif direction == 'col':
+                for row in range(10):
+                    new_board[row][index] = '.'
+
+            for row in range(10):
+                for col in range(10):
+                    if new_board[row][col] == '.':
+                        new_board[row][col] = 'W'
+                        if is_winning_move(new_board, row, col):
+                            total_victory_moves += 1
+                        new_board[row][col] = '.'
+
+    return total_victory_moves
+
+board = [list(input()) for _ in range(10)]
+
+result = count_victory_moves(board)
+print(result)

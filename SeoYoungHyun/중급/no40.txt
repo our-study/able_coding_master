@@ -1,0 +1,28 @@
+def is_tetromino(grid):
+    cells = [(i, j) for i in range(5) for j in range(5) if grid[i][j] == '#']
+    if len(cells) != 4:
+        return "NO"
+
+    def dfs(x, y, visited):
+        if x < 0 or x >= 5 or y < 0 or y >= 5:
+            return 0
+        if (x, y) in visited or grid[x][y] != '#':
+            return 0
+        visited.add((x, y))
+        count = 1
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            count += dfs(x + dx, y + dy, visited)
+        return count
+
+    start_x, start_y = cells[0]
+    visited = set()
+    connected_count = dfs(start_x, start_y, visited)
+    return "YES" if connected_count == 4 else "NO"
+
+grid = []
+
+for _ in range(5):
+    row = input().strip()
+    grid.append(row)
+
+print(is_tetromino(grid))

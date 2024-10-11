@@ -1,0 +1,78 @@
+from collections import deque
+
+def bfs_check(grid, start, visited, target_char):
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    queue = deque([start])
+    visited[start[0]][start[1]] = True
+    area_size = 0
+    enclosed = True
+
+    while queue:
+        x, y = queue.popleft()
+        area_size += 1
+
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < 10 and 0 <= ny < 20:
+                if not visited[nx][ny] and grid[nx][ny] == target_char:
+                    visited[nx][ny] = True
+                    queue.append((nx, ny))
+                elif grid[nx][ny] == '.':
+                    continue
+            else:
+                enclosed = False
+    
+    return area_size, enclosed
+
+def check_all_dots_connected(grid):
+    visited = [[False] * 20 for _ in range(10)]
+    total_dots = sum(row.count('.') for row in grid)
+    found_dot = False
+
+    for i in range(10):
+        for j in range(20):
+            if grid[i][j] == '.':
+                found_dot = True
+                dot_x, dot_y = i, j
+                break
+        if found_dot:
+            break
+
+    if not found_dot:
+        return False
+
+    area_size, _ = bfs_check(grid, (dot_x, dot_y), visited, '.')
+    return area_size == total_dots
+
+def check_hash_enclosed(grid):
+    visited = [[False] * 20 for _ in range(10)]
+    found_enclosed = False
+
+    for i in range(10):
+        for j in range(20):
+            if grid[i][j] == '#' and not visited[i][j]:
+                area_size, enclosed = bfs_check(grid, (i, j), visited, '#')
+                if area_size >= 6 and enclosed:
+                    found_enclosed = True
+
+    return found_enclosed
+
+N = int(input().strip())
+results = []
+
+for _ in range(N):
+    grid = [input().strip() for _ in range(10)]
+
+    condition1 = check_all_dots_connected(grid)
+    condition2 = check_hash_enclosed(grid)
+
+    if condition1 and condition2:
+        results.append("3")
+    elif condition1:
+        results.append("1")
+    elif condition2:
+        results.append("2")
+    else:
+        results.append("0")
+
+print("\n".join(results))

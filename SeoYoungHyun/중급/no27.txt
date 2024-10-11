@@ -1,0 +1,45 @@
+def calculate_iou(rect1, rect2):
+    x1, y1, w1, h1 = rect1
+    x2, y2, w2, h2 = rect2
+
+    inter_x1 = max(x1, x2)
+    inter_y1 = max(y1, y2)
+    inter_x2 = min(x1 + w1, x2 + w2)
+    inter_y2 = min(y1 + h1, y2 + h2)
+
+    inter_width = max(0, inter_x2 - inter_x1)
+    inter_height = max(0, inter_y2 - inter_y1)
+    intersection_area = inter_width * inter_height
+
+    area1 = w1 * h1
+    area2 = w2 * h2
+    union_area = area1 + area2 - intersection_area
+
+    if union_area == 0:
+        return 0
+    return intersection_area / union_area
+
+# 입력 받기
+import sys
+
+N = int(sys.stdin.readline().strip())
+rectangles = []
+
+for i in range(N):
+    x, y, w, h = map(int, sys.stdin.readline().strip().split())
+    rectangles.append((x, y, w, h))
+
+max_iou = -1
+best_pair = None
+
+# 모든 쌍의 IoU 계산
+for i in range(N):
+    for j in range(i + 1, N):
+        iou = calculate_iou(rectangles[i], rectangles[j])
+        if (iou > max_iou) or (iou == max_iou and (best_pair is None or (i + 1, j + 1) < best_pair)):
+            max_iou = iou
+            best_pair = (i + 1, j + 1)
+
+# 결과 출력
+if best_pair:
+    print(best_pair[0], best_pair[1])
