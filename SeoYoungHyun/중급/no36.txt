@@ -1,0 +1,45 @@
+from math import gcd
+
+def get_divisors(n):
+    return [i for i in range(1, n + 1) if n % i == 0]
+
+def find_smallest_pattern(N, M, picture):
+    row_divisors = get_divisors(N)
+    col_divisors = get_divisors(M)
+
+    smallest_pattern = None
+    smallest_area = float('inf')
+
+    for r in row_divisors:
+        for c in col_divisors:
+            if N % r == 0 and M % c == 0:
+                lcm_r = N // r
+                lcm_c = M // c
+                if lcm_r == lcm_c:  # 두 배수가 같아야 합니다.
+                    if r * c < smallest_area:
+                        # 패턴 검증
+                        pattern = [picture[i][:c] for i in range(r)]
+                        valid = True
+                        for i in range(N):
+                            for j in range(M):
+                                if picture[i][j] != pattern[i % r][j % c]:
+                                    valid = False
+                                    break
+                            if not valid:
+                                break
+                        if valid:
+                            smallest_area = r * c
+                            smallest_pattern = pattern
+
+    return smallest_pattern
+
+N, M = map(int, input().strip().split())
+picture = [input().strip() for _ in range(N)]
+
+# 결과 출력
+pattern = find_smallest_pattern(N, M, picture)
+if pattern:
+    for line in pattern:
+        print(line)
+else:
+    print(-1)

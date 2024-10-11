@@ -1,0 +1,23 @@
+from collections import deque
+
+def can_place_cards_in_order(N, cards):
+    deck = deque(cards)
+    
+    expected = 1
+    
+    while deck:
+        if deck[0] == expected:
+            deck.popleft()
+            expected += 1
+        elif deck[-1] == expected:
+            deck.pop()
+            expected += 1
+        else:
+            return "NO"
+    
+    return "YES"
+
+N = int(input().strip())
+cards = list(map(int, input().strip().split()))
+
+print(can_place_cards_in_order(N, cards))

@@ -1,0 +1,16 @@
+from itertools import permutations
+
+def can_form_palindrome(strings):
+    for perm in permutations(strings):
+        combined_string = ''.join(perm)
+        if is_palindrome(combined_string):
+            return "YES"
+    return "NO"
+
+def is_palindrome(s):
+    return s == s[::-1]
+    
+N = int(input().strip())
+strings = [input().strip() for _ in range(N)]
+
+print(can_form_palindrome(strings))

@@ -1,0 +1,56 @@
+from collections import deque
+
+def bfs(capacity, flow, source, sink, parent):
+    visited = [False] * len(capacity)
+    queue = deque([source])
+    visited[source] = True
+
+    while queue:
+        current = queue.popleft()
+        
+        for next in range(len(capacity)):
+            if not visited[next] and capacity[current][next] - flow[current][next] > 0:
+                queue.append(next)
+                visited[next] = True
+                parent[next] = current
+                if next == sink:
+                    return True
+    return False
+
+def max_flow(capacity, source, sink):
+    n = len(capacity)
+    flow = [[0] * n for _ in range(n)]
+    parent = [-1] * n
+    total_flow = 0
+
+    while bfs(capacity, flow, source, sink, parent):
+        path_flow = float('Inf')
+        s = sink
+        while s != source:
+            path_flow = min(path_flow, capacity[parent[s]][s] - flow[parent[s]][s])
+            s = parent[s]
+
+        v = sink
+        while v != source:
+            u = parent[v]
+            flow[u][v] += path_flow
+            flow[v][u] -= path_flow
+            v = parent[v]
+
+        total_flow += path_flow
+
+    return total_flow
+
+N, P = map(int, input().split())
+capacity = [[0] * (N + 1) for _ in range(N + 1)]
+
+for _ in range(P):
+    u, v = map(int, input().split())
+    capacity[u][v] = 1
+    capacity[v][u] = 1
+
+source = 1
+sink = 2
+result = max_flow(capacity, source, sink)
+
+print(result)

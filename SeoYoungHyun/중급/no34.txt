@@ -1,0 +1,21 @@
+def count_rectangles_with_sum_10(N, M, grid):
+    count = 0
+    
+    for i1 in range(N):
+        for j1 in range(M):
+            for i2 in range(i1, N):
+                for j2 in range(j1, M):
+                    total_sum = 0
+                    for i in range(i1, i2 + 1):
+                        for j in range(j1, j2 + 1):
+                            total_sum += grid[i][j]
+                    
+                    if total_sum == 10:
+                        count += 1
+    
+    return count
+
+N, M = map(int, input().strip().split())
+grid = [list(map(int, input().strip().split())) for _ in range(N)]
+
+print(count_rectangles_with_sum_10(N, M, grid))

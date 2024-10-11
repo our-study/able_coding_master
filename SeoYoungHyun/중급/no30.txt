@@ -1,0 +1,13 @@
+from itertools import product
+
+# 입력 받기
+N, K = map(int, input().split())
+characters = input().strip()
+
+# 가능한 모든 조합 생성
+combinations = product(characters, repeat=K)
+
+combinations = sorted(combinations)
+# 결과 출력
+for combo in combinations:
+    print("".join(combo))

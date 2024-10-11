@@ -1,0 +1,24 @@
+from itertools import permutations
+
+def find_word_puzzle(words):
+    words.sort()
+    best_puzzle = None
+    
+    for perm in permutations(words, 3):
+        row1, row2, row3 = perm
+        col1 = row1[0] + row2[0] + row3[0]
+        col2 = row1[1] + row2[1] + row3[1]
+        col3 = row1[2] + row2[2] + row3[2]
+
+        if {col1, col2, col3}.issubset(words):
+            if {row1, row2, row3, col1, col2, col3} == set(words):
+                if not best_puzzle or "\n".join(perm) < best_puzzle:
+                    best_puzzle = "\n".join(perm)
+    
+    return best_puzzle
+
+words = [input().strip() for _ in range(6)]
+
+words = find_word_puzzle(words)
+
+print(words)

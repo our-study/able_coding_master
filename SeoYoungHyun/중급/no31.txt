@@ -1,0 +1,17 @@
+def is_pretty_number(N):
+    N_str = str(N)
+    length = len(N_str)
+    
+    for i in range(length):
+        for j in range(i + 1, length + 1):
+            part_str = N_str[i:j]
+            part_number = int(part_str)
+            
+            if part_number != 0 and part_number != N and N % part_number == 0:
+                return "YES"
+    
+    return "NO"
+
+N = int(input().strip())
+
+print(is_pretty_number(N))

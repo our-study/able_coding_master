@@ -1,0 +1,39 @@
+from collections import deque
+
+def min_parfaits_to_buy(desserts):
+    desserts = deque(desserts)
+    count = 0 
+
+    while 'F' in desserts:
+        left_distance_to_fish = 0
+        for char in desserts:
+            if char == 'F':
+                break
+            left_distance_to_fish += 1
+
+        right_distance_to_fish = 0
+        for char in reversed(desserts):
+            if char == 'F':
+                break
+            right_distance_to_fish += 1
+
+        if left_distance_to_fish <= right_distance_to_fish:
+            while desserts and desserts[0] == 'P':
+                desserts.popleft()
+                count += 1
+
+            while desserts and desserts[0] == 'F':
+                desserts.popleft()
+
+        else:
+            while desserts and desserts[-1] == 'P':
+                desserts.pop()
+                count += 1
+
+            while desserts and desserts[-1] == 'F':
+                desserts.pop()
+
+    return count
+
+desserts = input().strip()
+print(min_parfaits_to_buy(desserts))
