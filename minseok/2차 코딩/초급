@@ -1,1 +1,9 @@
+1) 채터링
 
+n, k = map(int,input().split())
+c = []
+a = input()
+for i in a[:n]:
+    c.append(i*k)
+
+print(''.join(c))
