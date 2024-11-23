@@ -7,3 +7,10 @@ for i in a[:n]:
     c.append(i*k)
 
 print(''.join(c))
+
+2) 기차와 파리
+
+n, k ,p = map(int, input().split())
+a = n/2
+b = a/k
+print(int(b*p))
