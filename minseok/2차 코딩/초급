@@ -27,3 +27,48 @@ for num in a[1:]:
     result = gcd(result, num)
 
 print(result)
+
+4) 떨어진 숫자(병합 정렬을 참고해서)
+
+def merge_sort(s, e, a, tmp):
+    if e - s < 1:
+        return
+    m = (s + e) // 2
+    merge_sort(s, m, a, tmp)
+    merge_sort(m + 1, e, a, tmp)
+    for i in range(s, e + 1):
+        tmp[i] = a[i]
+    k = s
+    index1 = s
+    index2 = m + 1
+    while index1 <= m and index2 <= e:
+        if tmp[index1] > tmp[index2]:
+            a[k] = tmp[index2]
+            k += 1
+            index2 += 1
+        else:
+            a[k] = tmp[index1]
+            k += 1
+            index1 += 1
+    while index1 <= m:
+        a[k] = tmp[index1]
+        k += 1
+        index1 += 1
+    while index2 <= e:
+        a[k] = tmp[index2]
+        k += 1
+        index2 += 1
+
+a = list(map(int, input().strip()))
+b = list(map(int, input().strip()))
+
+tmp_a = [0] * len(a)
+tmp_b = [0] * len(b)
+
+merge_sort(0, len(a) - 1, a, tmp_a)
+merge_sort(0, len(b) - 1, b, tmp_b)
+
+if a == b:
+    print('YES')
+else:
+    print('NO')
