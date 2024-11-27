@@ -85,3 +85,16 @@ if a == b:
     print('YES')
 else:
     print('NO')
+
+5) 팬그램
+
+a = input()
+
+aa = a.lower()
+b = set('abcdefghijklmnopqrstuvwxyz')
+c = set(filter(str.isalpha, aa))
+
+if b.issubset(c):
+    print('YES')
+else:
+    print('NO')
