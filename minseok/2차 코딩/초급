@@ -136,3 +136,17 @@ elif x == y and y == z:
     print('possible')
 else:
     print('impossible')
+
+8) 톱니바퀴
+
+a, b, c = map(int, input().split())
+d = a / c 
+e = 0
+f = 0
+i = 1
+while f < 10:
+    f = d * i
+    i += 1
+    e += 1
+
+print(e)
