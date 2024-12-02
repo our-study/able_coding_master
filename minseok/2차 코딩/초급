@@ -98,3 +98,26 @@ if b.issubset(c):
     print('YES')
 else:
     print('NO')
+
+6) 마법의 지팡이
+
+a = int(input())
+
+N = 0
+while a > 1:
+    if a % 2 == 0:
+        a = a / 2
+        N += 1
+    elif a % 3 == 0:
+        a = a / 3 * 2
+        N += 1
+    elif a % 5 == 0:
+        a = a / 5 * 4
+        N += 1
+    else:
+        break
+        
+if a == 1:
+    print(N)
+else:
+    print(-1)
